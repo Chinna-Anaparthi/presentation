@@ -1,25 +1,51 @@
 import streamlit as st
 
-# Page title
-st.title('Registration Form')
+# Set the title of the app
+st.title("Registration Form 💁")
 
-# Form to collect user information
-with st.form(key='register_form'):
-    username = st.text_input('Username')
-    password = st.text_input('Password', type='password')
-    email = st.text_input('Email')
-    bio = st.text_area('Bio (optional)')
-    
-    # Submit button
-    submit_button = st.form_submit_button(label='Register')
+# Sidebar content
+st.sidebar.title("Sidebar Menu")
+st.sidebar.write("You can add any widgets here")
 
-# Logic after form submission
-if submit_button:
-    if not username or not password or not email:
-        st.error('Please fill out all required fields')
+# Registration form
+st.header("Please fill out the form below:")
+
+# Input fields
+first_name = st.text_input("First Name")
+last_name = st.text_input("Last Name")
+email = st.text_input("Email")
+password = st.text_input("Password", type="password")
+confirm_password = st.text_input("Confirm Password", type="password")
+
+# Gender selection
+gender = st.radio("Gender", options=["Male", "Female", "Other"])
+
+# Date of birth
+dob = st.date_input("Date of Birth")
+
+# Address
+address = st.text_area("Address")
+
+# Phone number
+phone = st.text_input("Phone Number")
+
+# Checkbox for terms and conditions
+terms = st.checkbox("I agree to the terms and conditions")
+
+# Submit button
+if st.button("Submit"):
+    if not all([first_name, last_name, email, password, confirm_password, terms]):
+        st.error("Please fill out all fields and agree to the terms.")
+    elif password != confirm_password:
+        st.error("Passwords do not match.")
     else:
-        st.success(f'Registration successful for {username}!')
-        st.write('Here is the information you provided:')
-        st.write(f'Username: {username}')
-        st.write(f'Email: {email}')
-        st.write(f'Bio: {bio}')
+        # Process the form data here
+        st.success("Registration successful!")
+        st.write(f"Name: {first_name} {last_name}")
+        st.write(f"Email: {email}")
+        st.write(f"Gender: {gender}")
+        st.write(f"Date of Birth: {dob}")
+        st.write(f"Address: {address}")
+        st.write(f"Phone: {phone}")
+
+# Run the app with `streamlit run registration_form.py`
